@@ -10,7 +10,6 @@ import time
 
 # read file
 path = '~/Desktop/Sentiment-Classification-of-YouTube-comments-using-Machine-Learning-Techniques-main/API/filtered_comments_cleaned.txt'
-
 df = pd.read_csv(path, delimiter='\t', low_memory=False)
 
 # remove NA
