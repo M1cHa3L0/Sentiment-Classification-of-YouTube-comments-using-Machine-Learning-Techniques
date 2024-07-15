@@ -123,7 +123,8 @@ def sentiment_score(text):
 
 
 # read all file
-file_path = '/Users/apple/Desktop/final project/FinalProject/API/comment/*.txt'
+
+file_path = '~/Desktop/Sentiment-Classification-of-YouTube-comments-using-Machine-Learning-Techniques-main/API/comment/*.txt'
 
 all_files = glob.glob(file_path)
 df_list = [pd.read_csv(file, delimiter='\t', low_memory=False) for file in all_files]
@@ -165,7 +166,9 @@ print(len(sample_Comment[sample_Comment['Sentiment'] == -1]))
 
 new_file_path = 'filtered_comments_cleaned.txt'
 new_file_path_excel = 'filtered_comments_cleaned.xlsx'
+new_file_path_csv = 'filtered_comments_cleaned.csv'
 
 # Save the filtered DataFrame to a new text file
 sample_Comment[['CommentTextDisplay', 'cleanComment', 'Sentiment']].to_csv(new_file_path, sep='\t', index=False)
 sample_Comment[['CommentTextDisplay', 'cleanComment', 'Sentiment']].to_excel(new_file_path_excel, index=False)
+sample_Comment[['CommentTextDisplay', 'cleanComment', 'Sentiment']].to_csv(new_file_path_csv, sep='\t', index=False)
