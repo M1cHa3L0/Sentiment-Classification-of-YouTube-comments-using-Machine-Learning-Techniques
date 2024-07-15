@@ -129,7 +129,6 @@ file_path = '~/Desktop/Sentiment-Classification-of-YouTube-comments-using-Machin
 all_files = glob.glob(file_path)
 df_list = [pd.read_csv(file, delimiter='\t', low_memory=False) for file in all_files]
 df = pd.concat(df_list, ignore_index=True)
-
 print(df.count())
 
 # preprocess
