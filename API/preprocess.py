@@ -145,7 +145,6 @@ print('1')
 # distinct_video_ids_list = unicomment.tolist()
 # print(len(distinct_video_ids_list))
 
-
 # preprocess
 start_time = time.time()
 sample_Comment['cleanComment'] = sample_Comment['CommentTextDisplay'].apply(preprocess_text)
