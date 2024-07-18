@@ -62,7 +62,6 @@ def is_english(text):
     if not isinstance(text, str):
         return False
 
-    # 避免影响后续操作
     text = remove_emoji(text)
 
     # 使用langdetect库检测text是否是en
@@ -123,12 +122,12 @@ def sentiment_score(text):
 
 
 # read all file
-
 file_path = '~/Desktop/Sentiment-Classification-of-YouTube-comments-using-Machine-Learning-Techniques-main/API/comment/*.txt'
 
 all_files = glob.glob(file_path)
 df_list = [pd.read_csv(file, delimiter='\t', low_memory=False) for file in all_files]
 df = pd.concat(df_list, ignore_index=True)
+
 print(df.count())
 
 # preprocess
@@ -144,6 +143,7 @@ print('1')
 # distinct_video_ids_list = unicomment.tolist()
 # print(len(distinct_video_ids_list))
 
+
 # preprocess
 start_time = time.time()
 sample_Comment['cleanComment'] = sample_Comment['CommentTextDisplay'].apply(preprocess_text)
@@ -151,7 +151,7 @@ end_time = time.time()
 print(f"耗时: {end_time - start_time:.4f} 秒")
 print('2')
 
-# label machinely
+# label
 start_time = time.time()
 sample_Comment['Sentiment'] = sample_Comment['CommentTextDisplay'].apply(sentiment_score)
 end_time = time.time()
