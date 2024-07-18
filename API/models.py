@@ -15,6 +15,10 @@ df = pd.read_csv(path, delimiter='\t', low_memory=False)
 # remove NA
 df = df.dropna(subset=['cleanComment', 'Sentiment'])
 print(df.count())
+df['cleanComment'] = df['cleanComment'].astype(str)
+df['Sentiment'] = df['Sentiment'].astype(int)
+df = df.dropna(subset=['cleanComment', 'Sentiment'])
+
 
 df = df[:3000]
 
@@ -32,38 +36,39 @@ model_params = {
     "Decision Tree": {
         "model": DecisionTreeClassifier(random_state=42),
         "params": {
-            "max_depth": [None, 10, 20, 30],
-            "min_samples_split": [5, 10, 20, 30, 40], # 1-40
-            "min_samples_leaf": [1, 2, 5, 10, 15, 20] # 1-20
+            "max_depth": [None, 10, 20, 30], # None
+            "min_samples_split": [5, 10, 20, 30, 40], # 20
+            "min_samples_leaf": [1, 2, 5, 10, 15, 20] # 1
         }
     },
     "SVM": {
         "model": SVC(random_state=42),
         "params": {
-            "C": [0.1, 1, 10, 100],
-            "kernel": ["linear", "rbf", "poly"],
-            "gamma": ["scale", "auto"]
+            "C": [0.1, 1, 10, 100], # 10
+            "kernel": ["linear", "rbf", "poly"], # linear
+            "gamma": ["scale", "auto"] # scale
         }
     },
     "Random Forest": {
         "model": RandomForestClassifier(random_state=42),
         "params": {
-            "n_estimators": [10, 25, 50, 100],
-            "max_depth": [None, 5, 10, 20],
-            "min_samples_split": [2, 5, 10],
-            "min_samples_leaf": [1, 2, 4]
+            "n_estimators": [10, 25, 50, 100], # 50
+            "max_depth": [None, 5, 10, 20], # None
+            "min_samples_split": [2, 5, 10, 15], # 10
+            "min_samples_leaf": [1, 2, 4] # 1
         }
     },
 
     "Gradient Boosting": {
         "model": GradientBoostingClassifier(random_state=42),
         "params": {
-            "n_estimators": [50, 100, 150, 200],
-            "learning_rate": [0.01, 0.1, 0.2],
-            "max_depth": [3, 5, 7], # 1-32
+            "n_estimators": [100, 200, 250, 300], # 250 [50, 100, 200, 250]
+            "learning_rate": [0.1, 0.2], # 0.1
+            "max_depth": [5, 10, 15, 20], # 15
         }
     }
 }
+
 
 # hyper tuning and test model
 performance_data = []
@@ -84,17 +89,12 @@ end_time = time.time()
 print(f"耗时: {end_time - start_time:.4f} 秒")
 
 
+
 columns = ['Model'] + [f'Fold_{i+1}' for i in range(10)] + ['Mean Accuracy', 'Best Params']
 performance_df = pd.DataFrame(performance_data, columns=columns)
 print(performance_df)
 
-# 保存性能数据到CSV文件
+# csv file
 performance_df.to_csv('model_performance_with_params.csv', index=False)
-
-
-
-
-
-
 
 
