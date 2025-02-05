@@ -9,7 +9,7 @@ import time
 
 
 # read file
-path = '~/Desktop/Sentiment-Classification-of-YouTube-comments-using-Machine-Learning-Techniques-main/API/filtered_comments_cleaned.txt'
+path = '/Users/apple/Desktop/final project/FinalProjectGit/API/filtered_comments_cleaned.txt'
 df = pd.read_csv(path, delimiter='\t', low_memory=False)
 
 # remove NA
@@ -98,3 +98,4 @@ print(performance_df)
 performance_df.to_csv('model_performance_with_params.csv', index=False)
 
 
+######check
