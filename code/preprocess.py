@@ -6,6 +6,7 @@ from nltk.stem import PorterStemmer
 import re
 from langdetect import detect
 from afinn import Afinn
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 nltk.download('punkt') # tokenization
 nltk.download('stopwords')
@@ -125,3 +126,24 @@ def sentiment_score(text):
         return -1
     else:
         return 0
+
+
+# tf-idf
+def tf_idf(df):
+    # remove NA
+    df = df.dropna(subset=['cleanComment', 'Sentiment']).copy()
+    print(df.count())
+    df['cleanComment'] = df['cleanComment'].astype(str)
+    df['Sentiment'] = df['Sentiment'].astype(int)
+    df = df.dropna(subset=['cleanComment', 'Sentiment'])
+    df = df[:3000]
+
+    # feature & label
+    x = df['cleanComment']
+    y = df['Sentiment']
+
+    # TF-IDF matrix
+    tfidf_vectorizer = TfidfVectorizer()
+    tfidf_matrix = tfidf_vectorizer.fit_transform(x)
+
+    return tfidf_matrix, y
